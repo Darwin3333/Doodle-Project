@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const doodler = document.createElement('div');
   let doodlerLeftSpace = 50;
   let startPoint = 150;
-  let score = 13;
+  let score = 0;
   let doodlerBottomSpace = 150;
   let isGameOver = false;
   let plataformCount = 5;
@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let leftTimerId;
   let rightTimerId;
   let mensagemTrigger = false;
+
   class Plataform {
     constructor(newPlatBottom) {
       this.bottom = newPlatBottom;
@@ -78,7 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function changeEviroment() {
     if (score == 15) {
       grid.style.backgroundImage = 'url(/assets/seaCorals.jpg)';
-    } else if (score == 17) {
+    } else if (score == 30) {
       grid.style.backgroundImage = 'url(/assets/magma.jpg)';
     }
   }
@@ -96,10 +97,9 @@ document.addEventListener('DOMContentLoaded', () => {
           //firstPlataform.remove();
           score++;
           if (score == 15) {
-            mensagemTrigger = true;
             changeEviroment();
             showWellDoneMessage();
-          } else if (score == 17) {
+          } else if (score == 30) {
             showWellDoneMessage();
             changeEviroment();
           }
@@ -117,9 +117,13 @@ document.addEventListener('DOMContentLoaded', () => {
     isJumping = true;
     console.log(isJumping, 'pulando');
     upTimerId = setInterval(function () {
-      doodlerBottomSpace += 20;
-      doodler.style.bottom = doodlerBottomSpace + 'px';
-      if (doodlerBottomSpace >= startPoint + 350) {
+      if (doodlerBottomSpace < 450) {
+        doodlerBottomSpace += 15;
+        doodler.style.bottom = doodlerBottomSpace + 'px';
+      } else {
+        fall();
+      }
+      if (doodlerBottomSpace >= startPoint + 250) {
         fall();
       }
     }, 30);
